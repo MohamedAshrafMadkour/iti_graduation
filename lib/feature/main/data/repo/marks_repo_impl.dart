@@ -10,7 +10,7 @@ import 'package:iti_graduation/feature/main/domain/repo/marks_repo.dart';
 
 class MarksRepoImpl extends MarksRepo {
   @override
-  Future<void> addMark({required MovieEntity movie}) {
+  Future<void> addMark({required MovieEntity movie}) async {
     var bookMark = BookMarkEntity(
       id: movie.id,
       originalTitle: movie.originalTitle,
@@ -20,9 +20,8 @@ class MarksRepoImpl extends MarksRepo {
       voteCount: movie.voteCount,
     );
     try {
-      var box = Hive.box<BookMarkEntity>(EndPoint.hiveEndPoint);
+      var box = await Hive.box<BookMarkEntity>(EndPoint.hiveEndPoint);
       box.put(movie.id, bookMark);
-      return Future.value();
     } catch (e) {
       log(e.toString());
       return Future.error(ServerFailure(e.toString()));
@@ -32,7 +31,7 @@ class MarksRepoImpl extends MarksRepo {
   @override
   Future<void> deleteMark({required MovieEntity movie}) async {
     try {
-      var box = Hive.box<BookMarkEntity>(EndPoint.hiveEndPoint);
+      var box = await Hive.box<BookMarkEntity>(EndPoint.hiveEndPoint);
       box.delete(movie.id);
     } catch (e) {
       log(e.toString());
@@ -43,7 +42,7 @@ class MarksRepoImpl extends MarksRepo {
   @override
   Future<Either<Failure, List<BookMarkEntity>>> fetchMarks() async {
     try {
-      var box = Hive.box<BookMarkEntity>(EndPoint.hiveEndPoint);
+      var box = await Hive.box<BookMarkEntity>(EndPoint.hiveEndPoint);
       var bookMarks = box.values.toList();
       return Right(bookMarks);
     } catch (e) {

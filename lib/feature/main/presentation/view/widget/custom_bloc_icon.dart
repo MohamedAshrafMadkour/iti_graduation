@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iti_graduation/core/helper/custom_snack_bar.dart';
 import 'package:iti_graduation/feature/main/domain/entity/movie_entity.dart';
 import 'package:iti_graduation/feature/main/presentation/cubit/add_marks/marks_cubit.dart';
 
@@ -24,8 +25,10 @@ class _CustomBlocIconState extends State<CustomBlocIcon> {
           onPressed: () {
             if (isMarked) {
               context.read<MarksCubit>().deleteBookMark(movie: widget.movie);
+              customSnackBar(context, isAdded: !isMarked);
             } else {
               context.read<MarksCubit>().addBookMark(movie: widget.movie);
+              customSnackBar(context, isAdded: !isMarked);
             }
           },
           icon: isMarked

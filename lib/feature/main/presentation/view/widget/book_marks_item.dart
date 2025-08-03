@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iti_graduation/core/widget/custom_cached_network_image.dart';
 import 'package:iti_graduation/feature/main/domain/entity/book_mark_entity.dart';
-import 'package:iti_graduation/feature/main/presentation/cubit/add_marks/marks_cubit.dart';
-import 'package:iti_graduation/feature/main/presentation/cubit/display_marks/display_marks_cubit.dart';
+import 'package:iti_graduation/feature/main/presentation/view/widget/custom_delete_book_mark_icon.dart';
 import 'package:iti_graduation/feature/main/presentation/view/widget/custom_rating.dart';
 
 class BookMarkItem extends StatelessWidget {
@@ -51,27 +49,6 @@ class BookMarkItem extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class CustomBlocDeleteIcon extends StatelessWidget {
-  const CustomBlocDeleteIcon({super.key, required this.bookMark});
-  final BookMarkEntity bookMark;
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<MarksCubit, MarksState>(
-      builder: (context, state) {
-        return IconButton(
-          onPressed: () {
-            context.read<MarksCubit>().deleteBookMark(
-              movie: bookMark.toEntity(),
-            );
-            context.read<DisplayMarksCubit>().fetchBookMarks();
-          },
-          icon: Icon(Icons.bookmark, size: 30, color: Colors.amber),
-        );
-      },
     );
   }
 }
